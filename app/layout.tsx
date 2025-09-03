@@ -8,8 +8,8 @@ import { Toaster } from '@/components/ui/sonner'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Audit Log Viewer',
-  description: 'View and filter audit logs in real-time',
+  title: 'Home page',
+  description: 'it is home page',
 }
 
 export default function RootLayout({
