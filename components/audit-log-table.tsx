@@ -16,6 +16,7 @@ import { format } from 'date-fns'
 import { ArrowUpDown } from 'lucide-react'
 import { Button } from './ui/button'
 import { Badge } from './ui/badge'
+import { getEventTypeVariant } from './common/eventVarient'
 
 interface AuditLogTableProps {
   logs: AuditLog[]
@@ -24,22 +25,12 @@ interface AuditLogTableProps {
 export default function AuditLogTable({ logs }: AuditLogTableProps) {
   const { filters, setSort } = useAuditLogStore()
   const [selectedLog, setSelectedLog] = useState<AuditLog | null>(null)
-  
+
   const handleSort = (field: string) => {
     const newOrder = filters.sortField === field && filters.sortOrder === 'asc' ? 'desc' : 'asc'
     setSort(field, newOrder)
   }
-  
-  const getEventTypeVariant = (eventType: string) => {
-    switch (eventType) {
-      case 'login': return 'default'
-      case 'logout': return 'secondary'
-      case 'create': return 'success'
-      case 'update': return 'warning'
-      case 'delete': return 'destructive'
-      default: return 'outline'
-    }
-  }
+
 
   return (
     <>
@@ -82,8 +73,8 @@ export default function AuditLogTable({ logs }: AuditLogTableProps) {
           </TableHeader>
           <TableBody>
             {logs.map((log) => (
-              <TableRow 
-                key={log.id} 
+              <TableRow
+                key={log.id}
                 className="cursor-pointer hover:bg-muted/50"
                 onClick={() => setSelectedLog(log)}
               >
@@ -91,7 +82,7 @@ export default function AuditLogTable({ logs }: AuditLogTableProps) {
                   {format(new Date(log.timestamp), 'PPpp')}
                 </TableCell>
                 <TableCell>
-                  <Badge variant={"default"}>
+                  <Badge variant={getEventTypeVariant(log.eventType)}>
                     {log.eventType}
                   </Badge>
                 </TableCell>
@@ -103,14 +94,14 @@ export default function AuditLogTable({ logs }: AuditLogTableProps) {
             ))}
           </TableBody>
         </Table>
-        
+
         {logs.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             No logs found matching your filters
           </div>
         )}
       </div>
-      
+
       {selectedLog && (
         <LogDetailModal log={selectedLog} onClose={() => setSelectedLog(null)} />
       )}

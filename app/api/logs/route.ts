@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     const sortOrder = searchParams.get('sortOrder') || 'desc'
 
     // Filter logs based on parameters
-    let filteredLogs = mockLogs.filter(log => {
+    const filteredLogs = mockLogs.filter(log => {
         // Search filter
         if (search && !log.details.toLowerCase().includes(search.toLowerCase()) &&
             !log.userName.toLowerCase().includes(search.toLowerCase())) {
