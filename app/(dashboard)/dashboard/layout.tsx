@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import { Sidebar } from '@/components/sidebar'
-import RealTimeNotification from '@/components/realtime-notification'
 
 
 export const metadata: Metadata = {
@@ -15,7 +14,6 @@ export default function DashboardLayout({
 }) {
     return (
         <div className='flex'>
-            <RealTimeNotification />
             <Sidebar />
             {children}
         </div>
